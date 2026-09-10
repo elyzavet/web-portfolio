@@ -279,7 +279,7 @@ h1.section__title {
 /* Анімація badge через @keyframes (Пункт 9 ТЗ) */
 @keyframes pulseBadge {
   0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1.25); }
   100% { transform: scale(1); }
 }
 

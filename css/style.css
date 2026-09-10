@@ -1,39 +1,45 @@
 /* ==========================================================================
-   1. CSS ЗМІННІ (Палітра ніжних рожевих та бордових тонів)
+   1. CSS ЗМІННІ (Пункт 3: 12+ змінних, палітра кольорів, відступи, тіні)
    ========================================================================== */
 :root {
+  /* Кольорова палітра */
   --bg-color: #FFF5F7;            /* Ніжно-рожевий фон */
-  --card-bg: #FFFFFF;             /* Білі картки */
-  --text-color: #2B1E22;          /* Темно-коричневий для високого контрасту (>4.5:1) */
-  --title-color: #800020;         /* Бордовий для заголовков */
-  --primary-accent: #B8325D;      /* Насичений рожевий для чіткого контрасту */
-  --secondary-accent: #C71585;    /* Насичений рожево-бордовий */
-  --border-color: #F8C8DC;        /* Світло-рожева рамка */
+  --card-bg: #FFFFFF;             /* Білий фон карток */
+  --text-color: #2B1E22;          /* Темний текст */
+  --title-color: #800020;         /* Бордовий для заголовків */
+  --primary-accent: #D87093;      /* Рожевий акцент */
+  --secondary-accent: #C71585;    /* Темно-рожевий акцент */
+  --border-color: #F8C8DC;        /* Світло-рожеві рамки */
+  --btn-text-color: #FFFFFF;      /* Колір тексту кнопок */
   
+  /* Типографіка та розкладка */
   --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --h1-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.5rem);
+  --h2-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.8rem);
   
+  /* Відступи та радіуси (Пункт 6: відносні одиниці rem) */
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
-  --spacing-lg: 2rem;
+  --spacing-lg: 1.5rem;
   
+  /* Допустимі фіксовані px (Пункт 6: лише для border, shadow) */
   --radius-sm: 8px;
   --radius-md: 16px;
   --shadow-soft: 0 4px 15px rgba(128, 0, 32, 0.08);
-  
-  --font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --h1-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
-  --h2-size: clamp(1.35rem, 1.1rem + 1vw, 2rem);
 }
 
-/* Темна тема через media-query */
+/* Пункт 4: Реалізація темної теми через перевизначення ВИКЛЮЧНО змінних */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #1A0B10;          /* Глибокий темно-бордовий фон */
-    --card-bg: #2A161E;           /* Темно-рожеві картки */
-    --text-color: #FCE4EC;        /* Світло-рожевий текст для контрасту */
-    --title-color: #FFC0CB;       /* Яскраво-рожевий для заголовків */
-    --primary-accent: #FF8DA1;    /* Світлий рожевий акцент */
+    --bg-color: #1A0B10;          
+    --card-bg: #2A161E;           
+    --text-color: #FCE4EC;        
+    --title-color: #FFB7C5;       
+    --primary-accent: #E68AAA;
+    --secondary-accent: #F48FB1;
     --border-color: #4A2332;
+    --btn-text-color: #1A0B10;
     --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.4);
   }
 }
@@ -53,7 +59,7 @@ html {
   font-size: var(--font-size-base);
   background-color: var(--bg-color);
   color: var(--text-color);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 body {
@@ -62,24 +68,13 @@ body {
   min-height: 100vh;
 }
 
-/* Виправлення контрастності для посилань */
-a {
-  color: var(--primary-accent);
-  text-decoration: underline;
-  transition: color 0.3s ease;
-}
-
-a:hover, a:focus {
-  color: var(--title-color);
-}
-
-/* Accessible Skip Link (Фіксований темно-бордовий фон для WCAG AA/AAA) */
+/* Доступність (Skip Link) */
 .skip-link {
   position: absolute;
   top: -100px;
   left: 10px;
-  background-color: #800020;
-  color: #FFFFFF !important;
+  background: var(--title-color);
+  color: var(--btn-text-color);
   padding: 10px 15px;
   z-index: 1000;
   border-radius: var(--radius-sm);
@@ -91,20 +86,19 @@ a:hover, a:focus {
   top: 10px;
 }
 
-/* Псевдоклас :focus-visible */
 :focus-visible {
-  outline: 3px solid var(--primary-accent);
-  outline-offset: 3px;
+  outline: 3px solid var(--secondary-accent);
+  outline-offset: 2px;
 }
 
 img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
   display: block;
 }
 
 /* ==========================================================================
-   3. МАКЕТ МОБІЛЬНОГО ПРИСТРОЮ (< 768px) - MOBILE FIRST
+   3. MOBILE FIRST (Базові стилі для мобільних пристроїв без медіа-запитів)
    ========================================================================== */
 .header {
   position: sticky;
@@ -112,7 +106,7 @@ img {
   z-index: 100;
   background-color: var(--card-bg);
   border-bottom: 1px solid var(--border-color);
-  padding: var(--spacing-md);
+  padding: 0.8rem 1rem;
   box-shadow: var(--shadow-soft);
 }
 
@@ -120,22 +114,21 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
 .header__logo {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: bold;
   color: var(--title-color);
   text-decoration: none;
 }
 
-/* Бургер-меню через <details> без JS */
+/* Мобільне меню */
 .header__nav-details summary {
   list-style: none;
   cursor: pointer;
-  padding: var(--spacing-sm);
+  padding: 4px;
 }
 
 .header__nav-details summary::-webkit-details-marker {
@@ -144,8 +137,8 @@ img {
 
 .header__burger-line {
   display: block;
-  width: 25px;
-  height: 3px;
+  width: 22px;
+  height: 2px;
   background-color: var(--title-color);
   margin: 4px 0;
   border-radius: 2px;
@@ -163,29 +156,25 @@ img {
   color: var(--text-color);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
+  display: block;
+  padding: 4px 0;
 }
 
-.nav__link:hover {
-  color: var(--title-color);
-}
-
-/* Секції */
+/* Контейнер вмісту */
 .main-content {
-  max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-md);
+  padding: 0.8rem;
   width: 100%;
 }
 
 .section {
   background-color: var(--card-bg);
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-soft);
-  scroll-margin-top: 80px;
+  scroll-margin-top: 70px;
 }
 
 .section__title {
@@ -202,14 +191,14 @@ h1.section__title {
 .section__title::after {
   content: '';
   display: block;
-  width: 40px;
+  width: 35px;
   height: 3px;
   background-color: var(--primary-accent);
   margin-top: 4px;
   border-radius: 2px;
 }
 
-/* Мобільна секція "Про мене" */
+/* Секція "Про мене" (Flexbox) */
 .about-grid {
   display: flex;
   flex-direction: column;
@@ -220,8 +209,10 @@ h1.section__title {
 
 .about-grid__img {
   border-radius: 50%;
-  border: 4px solid var(--border-color);
+  border: 3px solid var(--border-color);
   object-fit: cover;
+  width: 200px;
+  height: 200px;
 }
 
 .about-grid__sidebar {
@@ -240,8 +231,8 @@ h1.section__title {
 
 .skills__bar {
   background-color: var(--bg-color);
-  height: 12px;
-  border-radius: 6px;
+  height: 10px;
+  border-radius: 5px;
   overflow: hidden;
   margin-top: 4px;
   border: 1px solid var(--border-color);
@@ -250,14 +241,13 @@ h1.section__title {
 .skills__progress {
   height: 100%;
   background: linear-gradient(90deg, var(--primary-accent), var(--title-color));
-  border-radius: 6px;
-  transition: width 1s ease-in-out;
+  border-radius: 5px;
 }
 
-/* Сітки - Мобільний стан (1 колонка) */
+/* Пункт 5: CSS Grid з обов'язковим repeat(auto-fit, minmax(..., 1fr)) */
 .cards-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--spacing-md);
 }
 
@@ -267,25 +257,17 @@ h1.section__title {
   padding: var(--spacing-md);
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-soft);
-}
-
-/* Бейджі карток (Зафіксовано темно-бордовий фон для виключення помилки контрастності) */
 .card__badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #800020;
-  color: #FFFFFF !important;
-  font-size: 0.75rem;
-  font-weight: bold;
-  padding: 4px 10px;
-  border-radius: 12px;
+  top: 8px;
+  right: 8px;
+  background-color: var(--title-color);
+  color: var(--btn-text-color);
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
 }
 
 /* Таблиця */
@@ -297,10 +279,11 @@ h1.section__title {
   width: 100%;
   border-collapse: collapse;
   margin-top: var(--spacing-md);
+  font-size: 0.9rem;
 }
 
 .table th, .table td {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 8px;
   border: 1px solid var(--border-color);
   text-align: left;
 }
@@ -310,59 +293,60 @@ h1.section__title {
   color: var(--title-color);
 }
 
-.table tbody tr:nth-child(even) {
-  background-color: var(--bg-color);
-}
-
-/* Галерея - мобільний (1 колонка) */
+/* Пункт 5: Друга секція на Grid (Галерея) з repeat(auto-fit, minmax(..., 1fr)) */
 .gallery {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--spacing-md);
-  margin-top: var(--spacing-md);
 }
 
 .gallery__item {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-sm);
-  display: flex;
-  flex-direction: column;
+  border: 1px solid var(--border-color);
 }
 
-.gallery__item img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  display: block;
+.gallery__caption {
+  padding: 6px;
+  background-color: var(--bg-color);
+  font-size: 0.85rem;
+  text-align: center;
 }
 
-/* Форма */
+/* Форма зворотного зв'язку */
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 1rem;
 }
 
 .form__group {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .form__group--checkbox {
   flex-direction: row;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.form__group--checkbox input {
+  margin-top: 3px;
 }
 
 .form__input, .form__select, .form__textarea {
-  padding: var(--spacing-sm);
+  width: 100%;
+  padding: 10px 12px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: inherit;
+  font-size: 0.95rem;
 }
 
 .form__button {
@@ -378,69 +362,56 @@ h1.section__title {
   box-sizing: border-box;
   margin-top: 8px;
   transition: background-color 0.3s ease;
-}
+} 
 
 .form__button:hover {
-  background-color: #C71585 !important; /* Насичений рожево-бордовий при наведенні */
+  background-color: var(--secondary-accent);
 }
+
 /* Цитати */
 .quote {
-  border-left: 4px solid var(--title-color);
+  border-left: 3px solid var(--title-color);
   padding-left: var(--spacing-md);
   font-style: italic;
 }
 
-.quote__author {
-  display: block;
-  margin-top: var(--spacing-sm);
-  font-weight: bold;
-  font-style: normal;
-}
-
-/* Footer */
+/* Footer (Flexbox) */
 .footer {
   margin-top: auto;
   background-color: var(--card-bg);
   border-top: 1px solid var(--border-color);
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding: 1.2rem 1rem;
 }
 
 .footer__container {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: 0.8rem;
   text-align: center;
+  font-size: 0.9rem;
 }
 
 .footer__socials {
   display: flex;
   list-style: none;
-  gap: var(--spacing-md);
+  gap: 1.2rem;
 }
 
 .footer__socials a {
   color: var(--title-color);
-  text-decoration: underline;
-}
-
-/* Кнопка Анімація */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .footer__top-link {
   color: var(--title-color);
-  text-decoration: underline;
-  animation: pulse 2s infinite;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* ==========================================================================
-   4. МАКЕТ ПЛАНШЕТА (768px - 1199px)
+   4. МАКЕТ ПЛАНШЕТА (min-width: 768px) - Пункт 1: Тільки min-width
    ========================================================================== */
 @media (min-width: 768px) {
   .header__nav-details summary {
@@ -451,71 +422,28 @@ h1.section__title {
     display: block;
   }
 
-  .header__nav-details[open] summary {
-    display: none;
-  }
-
   .nav__list {
     flex-direction: row;
     padding-top: 0;
+    gap: 1.2rem;
   }
 
   .about-grid {
-    display: flex;
     flex-direction: row;
     text-align: left;
     align-items: flex-start;
   }
 
-  .about-grid__sidebar {
+  .form__button {
     width: auto;
-  }
-
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
+    align-self: flex-start;
   }
 }
 
 /* ==========================================================================
-   5. МАКЕТ ДЕСКТОПА (≥ 1200px)
+   5. МАКЕТ ДЕСКТОПА (min-width: 1200px) - Пункт 1: Тільки min-width
    ========================================================================== */
 @media (min-width: 1200px) {
-  .main-content {
-    max-width: 1200px;
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr 240px;
-    align-items: center;
-    gap: var(--spacing-lg);
-  }
-
-  .about-grid__sidebar {
-    width: 100%;
-  }
-
-  .cards-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-
-  .gallery {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .gallery__item--large {
-    grid-column: span 2;
-  }
-
-  .gallery__item--large img {
-    height: 100%;
-    min-height: 350px;
-  }
-
   .footer__container {
     flex-direction: row;
     justify-content: space-between;
@@ -523,7 +451,7 @@ h1.section__title {
 }
 
 /* ==========================================================================
-   6. ВИМКНЕННЯ АНІМАЦІЙ ПРИ PREFERS-REDUCED-MOTION
+   6. ВИМКНЕННЯ АНІМАЦІЙ ПРИ PREFERS-REDUCED-MOTION (Пункт 1: Виняток)
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

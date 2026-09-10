@@ -2,13 +2,13 @@
    1. CSS ЗМІННІ (Палітра ніжних рожевих та бордових тонів)
    ========================================================================== */
 :root {
-  --bg-color: #FFF5F7;            /* Ніжно-рожевий фон */
-  --card-bg: #FFFFFF;             /* Білі картки */
-  --text-color: #2B1E22;          /* Темно-коричневий для високого контрасту (>4.5:1) */
-  --title-color: #800020;         /* Бордовий для заголовков */
-  --primary-accent: #B8325D;      /* Насичений рожевий для чіткого контрасту */
-  --secondary-accent: #C71585;    /* Насичений рожево-бордовий */
-  --border-color: #F8C8DC;        /* Світло-рожева рамка */
+  --bg-color: #FFF5F7;           
+  --card-bg: #FFFFFF;            
+  --text-color: #2B1E22;          
+  --title-color: #800020;        
+  --primary-accent: #B8325D;      
+  --secondary-accent: #C71585;    
+  --border-color: #F8C8DC;        
   
   --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
   

@@ -269,28 +269,61 @@ h1.section__title {
   padding: 2px 8px;
   border-radius: 10px;
 }
-
-/* Таблиця */
+/* Обгортка таблиці */
 .table-wrapper {
+  width: 100%;
   overflow-x: auto;
 }
 
+/* Основні стилі таблиці */
 .table {
   width: 100%;
+  max-width: 1000px; /* Обмеження максимальної ширини на великих екранах */
+  margin: var(--spacing-md) auto;
   border-collapse: collapse;
-  margin-top: var(--spacing-md);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  table-layout: fixed; /* Фіксує пропорції колонок */
 }
 
-.table th, .table td {
-  padding: 8px;
+/* Обмеження розміру картинок усередині таблиці */
+.table img {
+  max-width: 80px;  /* Оптимальна ширина обкладинки */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+/* Оформлення комірок */
+.table th, 
+.table td {
+  padding: 10px;
   border: 1px solid var(--border-color);
-  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word; /* Перенос довгого тексту */
 }
 
 .table th {
   background-color: var(--bg-color);
   color: var(--title-color);
+  font-weight: bold;
+}
+
+/* Пропорції колонок */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 100px; /* Колонка з обкладинкою */
+  text-align: center;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 25%; /* Назва */
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 20%; /* Автор */
 }
 
 /* Пункт 5: Друга секція на Grid (Галерея) з repeat(auto-fit, minmax(..., 1fr)) */

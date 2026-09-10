@@ -366,14 +366,13 @@ h1.section__title {
 }
 
 .form__button {
-  background-color: var(--title-color);
-  color: #2a161e; 
-  padding: var(--spacing-md);
+  color: #2b0c18 !important;         /* Темний колір тексту для контрасту на світло-рожевому фоні */
+  background-color: var(--accent-color, #ffc2d1);
   border: none;
-  border-radius: var(--radius-sm);
+  font-weight: 600;                   /* Напівжирний шрифт для кращої читабельності */
+  -webkit-appearance: none;          /* Скидає системні стилі iOS/Safari */
+  appearance: none;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
 }
 
 .form__button:hover {

@@ -367,7 +367,7 @@ h1.section__title {
 
 .form__button {
   background-color: var(--title-color);
-  color: #ffffff;
+  color: #842d2d;
   padding: 12px 24px;
   border: none;
   border-radius: var(--radius-sm);

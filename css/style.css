@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. CSS ЗМІННІ (Пункт 3: 12+ змінних, палітра кольорів, відступи, тіні)
+   1. CSS ЗМІННІ (12+ змінних: палітра кольорів, типографіка, відступи, тіні)
    ========================================================================== */
 :root {
   /* Кольорова палітра */
@@ -12,24 +12,24 @@
   --border-color: #F8C8DC;        /* Світло-рожеві рамки */
   --btn-text-color: #FFFFFF;      /* Колір тексту кнопок */
   
-  /* Типографіка та розкладка */
+  /* Адаптивна типографіка через clamp() (Пункт 7 ТЗ) */
   --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
   --h1-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.5rem);
   --h2-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.8rem);
   
-  /* Відступи та радіуси (Пункт 6: відносні одиниці rem) */
+  /* Відступи та радіуси (Відносні одиниці rem) */
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   
-  /* Допустимі фіксовані px (Пункт 6: лише для border, shadow) */
+  /* Допустимі фіксовані px (лише для border, shadow) */
   --radius-sm: 8px;
   --radius-md: 16px;
   --shadow-soft: 0 4px 15px rgba(128, 0, 32, 0.08);
 }
 
-/* Пункт 4: Реалізація темної теми через перевизначення ВИКЛЮЧНО змінних */
+/* Реалізація темної теми через перевизначення ВИКЛЮЧНО змінних (Пункт 4 ТЗ) */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-color: #1A0B10;          
@@ -45,7 +45,7 @@
 }
 
 /* ==========================================================================
-   2. СКИДАННЯ ТА БАЗОВІ СТИЛІ
+   2. СКИДАННЯ ТА БАЗОВІ СТИЛІ (Плавна навігація — Пункт 11 ТЗ)
    ========================================================================== */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -68,7 +68,7 @@ body {
   min-height: 100vh;
 }
 
-/* Доступність (Skip Link) */
+/* Доступність (Skip Link та Доступність — Доступність / Пункт 10 Sticky & Relative/Absolute) */
 .skip-link {
   position: absolute;
   top: -100px;
@@ -115,6 +115,7 @@ img {
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
+  max-width: 1200px;
 }
 
 .header__logo {
@@ -122,9 +123,14 @@ img {
   font-weight: bold;
   color: var(--title-color);
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-/* Мобільне меню */
+.header__logo:hover {
+  color: var(--primary-accent);
+}
+
+/* Мобільне меню (Чекбокс-хак / summary) */
 .header__nav-details summary {
   list-style: none;
   cursor: pointer;
@@ -158,6 +164,15 @@ img {
   font-weight: 500;
   display: block;
   padding: 4px 0;
+  transition: color 0.3s ease;
+}
+
+.nav__link:hover { 
+  color: var(--primary-accent); 
+}
+
+.nav__link:focus-visible { 
+  outline: 2px solid var(--secondary-accent); 
 }
 
 /* Контейнер вмісту */
@@ -165,6 +180,7 @@ img {
   margin: 0 auto;
   padding: 0.8rem;
   width: 100%;
+  max-width: 1200px;
 }
 
 .section {
@@ -174,7 +190,7 @@ img {
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-soft);
-  scroll-margin-top: 70px;
+  scroll-margin-top: 70px; /* Плавна навігація для якірних посилань (Пункт 11) */
 }
 
 .section__title {
@@ -188,6 +204,7 @@ h1.section__title {
   font-size: var(--h1-size);
 }
 
+/* Псевдоелемент ::after (Пункт 8 ТЗ) */
 .section__title::after {
   content: '';
   display: block;
@@ -198,7 +215,7 @@ h1.section__title {
   border-radius: 2px;
 }
 
-/* Секція "Про мене" (Flexbox) */
+/* Секція "Про мене" — Мобільний стан: Фото над текстом по центру (За таблицею макетів) */
 .about-grid {
   display: flex;
   flex-direction: column;
@@ -244,7 +261,7 @@ h1.section__title {
   border-radius: 5px;
 }
 
-/* Пункт 5: CSS Grid з обов'язковим repeat(auto-fit, minmax(..., 1fr)) */
+/* Сітка карток (Grid repeat auto-fit — Пункт 5 ТЗ) */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -259,6 +276,13 @@ h1.section__title {
   border: 1px solid var(--border-color);
 }
 
+/* Анімація badge через @keyframes (Пункт 9 ТЗ) */
+@keyframes pulseBadge {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
 .card__badge {
   position: absolute;
   top: 8px;
@@ -268,39 +292,38 @@ h1.section__title {
   font-size: 0.7rem;
   padding: 2px 8px;
   border-radius: 10px;
+  animation: pulseBadge 2s infinite; /* Keyframe анімація */
 }
-/* Обгортка таблиці */
+
+/* Обгортка та стилі Таблиці */
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
 }
 
-/* Основні стилі таблиці */
 .table {
   width: 100%;
-  max-width: 1000px; /* Обмеження максимальної ширини на великих екранах */
+  max-width: 1000px;
   margin: var(--spacing-md) auto;
   border-collapse: collapse;
   font-size: 0.95rem;
-  table-layout: fixed; /* Фіксує пропорції колонок */
+  table-layout: fixed;
 }
 
-/* Обмеження розміру картинок усередині таблиці */
 .table img {
-  max-width: 80px;  /* Оптимальна ширина обкладинки */
+  max-width: 80px;
   height: auto;
   display: block;
   margin: 0 auto;
   border-radius: 4px;
 }
 
-/* Оформлення комірок */
 .table th, 
 .table td {
   padding: 10px;
   border: 1px solid var(--border-color);
   vertical-align: middle;
-  word-wrap: break-word; /* Перенос довгого тексту */
+  word-wrap: break-word;
 }
 
 .table th {
@@ -309,24 +332,16 @@ h1.section__title {
   font-weight: bold;
 }
 
-/* Пропорції колонок */
-.table th:nth-child(1),
-.table td:nth-child(1) {
-  width: 100px; /* Колонка з обкладинкою */
-  text-align: center;
+/* Псевдоклас :nth-child (Пункт 8 ТЗ) */
+.table tr:nth-child(even) { 
+  background-color: rgba(128, 0, 32, 0.03); 
 }
 
-.table th:nth-child(2),
-.table td:nth-child(2) {
-  width: 25%; /* Назва */
-}
+.table th:nth-child(1), .table td:nth-child(1) { width: 100px; text-align: center; }
+.table th:nth-child(2), .table td:nth-child(2) { width: 25%; }
+.table th:nth-child(3), .table td:nth-child(3) { width: 20%; }
 
-.table th:nth-child(3),
-.table td:nth-child(3) {
-  width: 20%; /* Автор */
-}
-
-/* Пункт 5: Друга секція на Grid (Галерея) з repeat(auto-fit, minmax(..., 1fr)) */
+/* Галерея (Grid auto-fit) */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -382,6 +397,7 @@ h1.section__title {
   font-size: 0.95rem;
 }
 
+/* Кнопка за вимогами CSS-змінних */
 .form__button {
   background-color: #800020 !important; /* Бордовий колір */
   color: #ffffff !important;             /* Яскраво-білий текст */
@@ -401,11 +417,28 @@ h1.section__title {
   background-color: var(--secondary-accent);
 }
 
-/* Цитати */
+
+
+/* Псевдоклас :active (Пункт 8 ТЗ) */
+.form__button:active { 
+  transform: scale(0.98); 
+}
+
+/* Цитати з псевдоелементом ::before (Пункт 8 ТЗ) */
 .quote {
   border-left: 3px solid var(--title-color);
   padding-left: var(--spacing-md);
   font-style: italic;
+  position: relative;
+}
+
+.quote::before {
+  content: '“';
+  font-size: 2rem;
+  color: var(--title-color);
+  line-height: 0;
+  vertical-align: -0.4em;
+  margin-right: 4px;
 }
 
 /* Footer (Flexbox) */
@@ -435,16 +468,26 @@ h1.section__title {
   color: var(--title-color);
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.3s ease; /* Transition 2 */
+}
+
+.footer__socials a:hover {
+  color: var(--primary-accent);
 }
 
 .footer__top-link {
   color: var(--title-color);
   text-decoration: none;
   font-weight: bold;
+  transition: opacity 0.3s ease; /* Transition 3 */
+}
+
+.footer__top-link:hover {
+  opacity: 0.8;
 }
 
 /* ==========================================================================
-   4. МАКЕТ ПЛАНШЕТА (min-width: 768px) - Пункт 1: Тільки min-width
+   4. МАКЕТ ПЛАНШЕТА (min-width: 768px) - Розділ 6 ТЗ
    ========================================================================== */
 @media (min-width: 768px) {
   .header__nav-details summary {
@@ -461,6 +504,7 @@ h1.section__title {
     gap: 1.2rem;
   }
 
+  /* За ТЗ: Фото ліворуч, текст праворуч (Flexbox) */
   .about-grid {
     flex-direction: row;
     text-align: left;
@@ -474,9 +518,22 @@ h1.section__title {
 }
 
 /* ==========================================================================
-   5. МАКЕТ ДЕСКТОПА (min-width: 1200px) - Пункт 1: Тільки min-width
+   5. МАКЕТ ДЕСКТОПА (min-width: 1200px) - Розділ 6 ТЗ
    ========================================================================== */
 @media (min-width: 1200px) {
+  /* За ТЗ для Секції «Про мене»: Дві колонки + бічна панель (Grid) */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr 280px;
+    align-items: start;
+  }
+
+  /* За ТЗ для Галереї: Мозаїка із grid-row / grid-column span */
+  .gallery__item--large {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
   .footer__container {
     flex-direction: row;
     justify-content: space-between;
@@ -484,7 +541,7 @@ h1.section__title {
 }
 
 /* ==========================================================================
-   6. ВИМКНЕННЯ АНІМАЦІЙ ПРИ PREFERS-REDUCED-MOTION (Пункт 1: Виняток)
+   6. ВИМКНЕННЯ АНІМАЦІЙ ПРИ PREFERS-REDUCED-MOTION (Пункт 9 ТЗ)
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

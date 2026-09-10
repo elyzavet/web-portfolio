@@ -366,8 +366,8 @@ h1.section__title {
 }
 
 .form__button {
-  background-color: var(--title-color);
-  color: #842d2d;
+  background-color: #800020 !important; /* Бордовий колір */
+  color: #ffffff !important;             /* Яскраво-білий текст */
   padding: 12px 24px;
   border: none;
   border-radius: var(--radius-sm);
@@ -381,9 +381,8 @@ h1.section__title {
 }
 
 .form__button:hover {
-  background-color: var(--secondary-accent);
+  background-color: #C71585 !important; /* Насичений рожево-бордовий при наведенні */
 }
-
 /* Цитати */
 .quote {
   border-left: 4px solid var(--title-color);

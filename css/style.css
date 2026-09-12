@@ -185,6 +185,15 @@ img {
   max-width: 1200px;
 }
 
+/* Для всіх посилань у звичайному тексті */
+.main-content a {
+  color: var(--primary-accent);
+}
+
+.main-content a:hover {
+  color: var(--title-color);
+}
+
 .section {
   background-color: var(--card-bg);
   padding: 1.8rem;
